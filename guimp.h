@@ -6,7 +6,7 @@
 /*   By: msuarez- <msuarez-@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/12 10:55:41 by flashman          #+#    #+#             */
-/*   Updated: 2020/08/13 19:45:18 by msuarez-         ###   ########.fr       */
+/*   Updated: 2020/08/14 14:27:28 by msuarez-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,7 @@ typedef struct	s_env
 	SDL_Renderer	*ren;
 	SDL_Texture		*tex;
 	SDL_Surface		*bmp;
+	SDL_Rect		eraser;
 	t_point			mouse_pos;
 	int				brush_radius;
 	int				is_mouse_button_down;

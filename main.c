@@ -6,7 +6,7 @@
 /*   By: msuarez- <msuarez-@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/12 10:55:36 by flashman          #+#    #+#             */
-/*   Updated: 2020/08/13 19:45:16 by msuarez-         ###   ########.fr       */
+/*   Updated: 2020/08/14 14:54:33 by msuarez-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,8 @@ int		error_exit(char *str, int i)
 
 void	init_env(int argc, char *argv[], t_env *env)
 {
+	env->eraser.w = 10;
+	env->eraser.h = 10;
 	env->brush_radius = 10;
 	env->is_mouse_button_down = 0;
 	env->window_width = 680;
@@ -38,12 +40,20 @@ void	init_env(int argc, char *argv[], t_env *env)
 		error_exit("Failed to create renderer\n", 3);
 }
 
-void	draw_circle(t_env *env)
+void	brush_tool(t_env *env)
 {
 	for(int y =- env->brush_radius; y <= env->brush_radius; y++)
 		for(int x =- env->brush_radius; x <= env->brush_radius; x++)
 			if(x * x + y * y <= env->brush_radius * env->brush_radius)
 				SDL_RenderDrawPoint(env->ren, env->mouse_pos.x + x, env->mouse_pos.y + y);
+}
+
+void	eraser_tool(t_env *env)
+{
+	env->eraser.x = env->mouse_pos.x - env->eraser.w / 2;
+	env->eraser.y = env->mouse_pos.y - env->eraser.h / 2;
+	SDL_SetRenderDrawColor(env->ren, 255, 255, 255, 255);
+	SDL_RenderFillRect(env->ren, &env->eraser);
 }
 
 int		main(int argc, char *argv[])
@@ -53,7 +63,7 @@ int		main(int argc, char *argv[])
 	if (!(env = (t_env *)malloc(sizeof(t_env))))
 		return (-1);
 	init_env(argc, argv, env);
-	SDL_SetRenderDrawColor(env->ren, 242, 242, 242, 255);
+	SDL_SetRenderDrawColor(env->ren, 255, 255, 255, 255);
 	SDL_RenderClear(env->ren);
 	SDL_SetRenderDrawColor(env->ren, 255, 0, 0, 255);
 	env->quit = 0;
@@ -68,22 +78,18 @@ int		main(int argc, char *argv[])
 				env->mouse_pos.x = env->event.button.x;
 				env->mouse_pos.y = env->event.button.y;
 				if (env->is_mouse_button_down)
-					draw_circle(env);
+					eraser_tool(env);
+				//brush_tool(env);
 			}
 			if (env->event.type == SDL_MOUSEBUTTONUP)
 				env->is_mouse_button_down = 0;
 			if (env->event.type == SDL_MOUSEBUTTONDOWN)
 			{
 				env->is_mouse_button_down = 1;
-				draw_circle(env);
+				eraser_tool(env);
+				//brush_tool(env);
 			}
 		}
-		ft_putstr("Mouse X: ");
-		ft_putnbr(env->mouse_pos.x);
-		ft_putstr("\n");
-		ft_putstr("Mouse Y: ");
-		ft_putnbr(env->mouse_pos.y);
-		ft_putstr("\n\n");
 		SDL_RenderPresent(env->ren);
 	}
 	SDL_DestroyRenderer(env->ren);
