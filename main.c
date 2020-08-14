@@ -6,7 +6,7 @@
 /*   By: msuarez- <msuarez-@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/12 10:55:36 by flashman          #+#    #+#             */
-/*   Updated: 2020/08/14 14:54:33 by msuarez-         ###   ########.fr       */
+/*   Updated: 2020/08/14 15:17:44 by msuarez-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,7 @@ int		main(int argc, char *argv[])
 	{
 		while (SDL_PollEvent(&env->event) != 0)
 		{
-			if (env->event.type == SDL_QUIT)
+			if (env->event.type == SDL_QUIT || env->event.button.button == SDL_SCANCODE_ESCAPE)
 				env->quit = 1;
 			if (env->event.type == SDL_MOUSEMOTION)
 			{
