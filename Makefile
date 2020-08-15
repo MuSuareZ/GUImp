@@ -6,16 +6,16 @@
 #    By: msuarez- <msuarez-@student.hive.fi>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/08/12 10:37:05 by krusthol          #+#    #+#              #
-#    Updated: 2020/08/12 15:47:46 by msuarez-         ###   ########.fr        #
+#    Updated: 2020/08/15 17:06:15 by msuarez-         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = guimp
-SRC = main.c
+SRC = main.c window.c
 OBJ = $(subst .c,.o,$(SRC))
 CFLAGS = -Wall -Wextra -Werror
 LIBFT = libft/libft.a
-LIBS = -Llibft -lft -lSDL2
+LIBS = -Llibft -lft -lSDL2 -lSDL2_ttf
 
 all: $(NAME)
 
